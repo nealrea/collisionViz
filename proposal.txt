@@ -1,0 +1,15 @@
+Background and Motivation
+
+In a city as densely populated as New York City, traffic collisions are frequent and inevitable.  A compact transit structure and many varying forms of transportation lead to dangerous traffic congestion and collisions.  
+
+Project Objectives
+
+Our goal is to use New York City collision data to analyze trends and/or anomalies in traffic accidents throughout time, based on location, parties involved, and perhaps weather conditions.  We would hope that our results could be used by the city to implement safer traffic regulations in dangerous, accident-prone areas.
+
+Data
+
+Our collision data will be taken from NYC Open Data:
+https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95
+
+Data Processing
+
