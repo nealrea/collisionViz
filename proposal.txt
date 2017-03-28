@@ -14,7 +14,7 @@ The data which goes back to 2012, includes the date, time, coordinates, and loca
 
 
 Data Processing:
-
+We anticipate substantial data cleanup regarding the New York City weather data.  We will need to represent the weather data as average daily values across the city in order to optimize readability.  The collision data will also require some manipulation in order to place data points on the New York City map in a non-obstructive, visually pleasing manner.
 
 
 Visualization:
