@@ -1,3 +1,5 @@
+# Data Viz Project Proposal
+
 ### John Spencer, Michael Hendrickson, Neal "The Real Neal" Rea
 
 ### Background and Motivation
