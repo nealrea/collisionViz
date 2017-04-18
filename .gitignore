@@ -3,3 +3,4 @@ data/
 collisions.csv
 .DS_Store
 venv/
+AADT.csv
