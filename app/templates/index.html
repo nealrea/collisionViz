@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" /
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" /
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
 
 </head>
@@ -12,8 +12,9 @@
 
   <div id='map'></div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
-  <script src="{{ url_for('static', filename='leaflet.js') }}" ></script>
-  <script src="{{ url_for('static', filename='app.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/leaflet.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/jquery.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
 </body>
 
 </html>
