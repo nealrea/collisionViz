@@ -21,19 +21,21 @@ $.getJSON('/static/geo_data/borough.json', function(data) {
 // When user zooms, update the geoJSON layer
 map.on('zoomend', function() {
     var currentZoom = map.getZoom();
-    map.removeLayer(geoJSONLayer);
     if (currentZoom <= 10) {
         $.getJSON('/static/geo_data/borough.json', function(data) {
+            map.removeLayer(geoJSONLayer);
             geoJSONLayer = L.geoJSON(data)
             geoJSONLayer.addTo(map);
         });
     } else if (currentZoom <= 12) {
         $.getJSON('/static/geo_data/neighborhood.json', function(data) {
+            map.removeLayer(geoJSONLayer);
             geoJSONLayer = L.geoJSON(data)
             geoJSONLayer.addTo(map);
         });
     } else if (currentZoom <= 14) {
         $.getJSON('/static/geo_data/zip.json', function(data) {
+            map.removeLayer(geoJSONLayer);
             geoJSONLayer = L.geoJSON(data)
             geoJSONLayer.addTo(map);
         });
