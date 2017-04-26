@@ -1,6 +1,7 @@
 */.ipynb_checkpoints/
 data/
 collisions.csv
+collisions_cleaned.csv
 .DS_Store
 venv/
 AADT.csv
