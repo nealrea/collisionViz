@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import compute
 import os
 
 if os.getenv('DATA_ENV') == 'PRD':
@@ -16,6 +17,11 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/borough_totals'):
+def borough_totals():
+    totals = compute.borough_totals()
+    return jsonify(totals)
 
 if __name__ == "__main__":
     app.run(host=host,port=port,debug=debug)

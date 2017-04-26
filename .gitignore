@@ -4,3 +4,5 @@ collisions.csv
 .DS_Store
 venv/
 AADT.csv
+__pycache__/
+borough_zip_geo_backup.json
