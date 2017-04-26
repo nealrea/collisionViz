@@ -8,3 +8,25 @@ path:hover {
     fill: red;
     fill-opacity: 0.5;
 }
+
+#data {
+    border-radius: 10px;
+    z-index: 401;
+    background: rgba(0,0,0,.4);
+    color: white;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 300px;
+    display: none;
+    text-align: center;
+}
+
+.data-borough {
+    font-size: 25px;
+}
+
+.data-title {
+    font-size: 22px;
+    padding-left: 10px;
+}
