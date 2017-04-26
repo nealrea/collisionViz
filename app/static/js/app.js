@@ -53,7 +53,14 @@ map.on('zoomend', function() {
         geoLayer.currentLayer = geoLayer.boroughLayer;
         geoLayer.currentLayer.addTo(map);
         geoLayer.currentName = 'borough';
+        // add attribute to each boroughs html element
+        geoLayer.boroughLayer.eachLayer(function(layer) {
+            $(layer._path).attr('data-borough', layer.feature.properties.borough)
+                .addClass('borough');
+        });
         removeZipListeners();
+        removeBoroughListeners();
+        addBoroughListeners();
     } else if (currentZoom >= 12 && currentZoom <= 13 && geoLayer.currentName !== 'zip') {
         $('#data').hide();
         map.removeLayer(geoLayer.currentLayer);
@@ -64,6 +71,7 @@ map.on('zoomend', function() {
             $(layer._path).attr('data-zipCode', layer.feature.properties.postalCode)
                 .addClass('zipCode');
         });
+        removeBoroughListeners();
         removeZipListeners();
         addZipListeners();
     } else if (currentZoom >= 14) {

@@ -7,4 +7,4 @@ venv/
 AADT.csv
 __pycache__/
 borough_zip_geo_backup.json
-.pyc
+*.pyc
