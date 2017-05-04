@@ -11,14 +11,14 @@ else:
     port = 5000
     debug = True
 
-app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+application = Flask(__name__)
+application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/totals', methods=['GET'])
+@application.route('/totals', methods=['GET'])
 def totals():
     totals = {
         'borough': compute.borough_totals(),
@@ -27,4 +27,4 @@ def totals():
     return jsonify(totals)
 
 if __name__ == "__main__":
-    app.run(host=host,port=port,debug=debug)
+    application.run(host=host,port=port,debug=debug)
