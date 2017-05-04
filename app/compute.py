@@ -51,7 +51,7 @@ def causes_borough(collRate, borough):
 	plt.show()
 
 #plots histo of top 5 collision causes filtered by collision rate and zipcode
-def causes_borough(collRate, zipcode):
+def causes_zipcode(collRate, zipcode):
 	df = collisions[collisions['ZIPCODE'] == zipcode]
 	df = df[df['Collision Rate'] == collRate]
 	df = df[df.columns[18:23]]
