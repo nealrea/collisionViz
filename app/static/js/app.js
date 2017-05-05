@@ -19,12 +19,22 @@ $.getJSON('/static/geo_data/borough_zip_geo.json', function(data) {
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1Ijoiam9obnNwZW5jZXIxNSIsImEiOiJjajE2b2hhN2owMzl2MzRvNjhpdDM5bzk3In0.wr4EEzRfvpGTw6C9ltRZsw'
     }).addTo(map);
-    L.Routing.control({
-    waypoints: [
-      L.latLng(40.744725, -73.956927),
-      L.latLng(40.765096, -73.925007)
-    ]
-  }).addTo(map);
+
+    var routeControl = L.Routing.control({
+      waypoints: [
+        L.latLng(40.744725, -73.956927),
+        L.latLng(40.765096, -73.925007)
+      ]
+    })
+
+    .on('routeselected', function(e) {
+        var route = e.route;
+        var routeArray = new Array();
+        for (var i = 0; i < route.coordinates.length; i++) {
+            routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
+        }
+        console.log(routeArray);
+    }).addTo(map);
 
     geoLayer.currentLayer = geoLayer.boroughLayer;
     geoLayer.currentLayer.addTo(map);
