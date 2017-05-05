@@ -15,6 +15,7 @@ path:hover {
     background: rgba(0,0,0,.4);
     color: white;
     position: absolute;
+    margin-right: 100px;
     right: 30px;
     top: 30px;
     width: 300px;
