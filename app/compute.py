@@ -73,5 +73,11 @@ def causes_zipcode(collRate, zipcode):
 
 
 
+#probability of motorist collision by borough and collision rate
+def prob_of_coll_borough(collRate, borough):
+	df = collisions[collisions['BOROUGH'] == borough]
+	df = df[df['Collision Rate'] == collRate]
+	
+
 
 
