@@ -19,6 +19,73 @@ $.getJSON('/static/geo_data/borough_zip_geo.json', function(data) {
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1Ijoiam9obnNwZW5jZXIxNSIsImEiOiJjajE2b2hhN2owMzl2MzRvNjhpdDM5bzk3In0.wr4EEzRfvpGTw6C9ltRZsw'
     }).addTo(map);
+
+
+function createButton(label, container) {
+    var btn = L.DomUtil.create('button', '', container);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = label;
+    return btn;
+  }
+
+var control = L.Routing.control({
+      waypoints: []
+    })
+    .on('routeselected', function(e) {
+        var route = e.route;
+        var routeArray = new Array();
+        // add all the intermediate lat lng points from the route to an array
+        for (var i = 0; i < route.coordinates.length; i++) {
+            routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
+        }
+        console.log(routeArray);
+      });
+
+map.on('click', function(e) {
+  var container = L.DomUtil.create('div'),
+      startBtn = createButton('Start', container),
+      destBtn = createButton('End', container);
+
+      L.popup()
+      .setContent(container)
+      .setLatLng(e.latlng)
+      .openOn(map);
+
+      L.DomEvent.on(startBtn, 'click', function() {
+          control.spliceWaypoints(0, 1, e.latlng);
+          map.closePopup();
+      });
+
+      L.DomEvent.on(destBtn, 'click', function() {
+          control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+          map.closePopup();
+      });
+      control.addTo(map);
+      control.hide();
+    });
+
+    // Static route implementation - Initiate route on map
+    // var routeControl = L.Routing.control({
+    //   waypoints: [
+    //     L.latLng(40.744725, -73.956927),
+    //     L.latLng(40.765096, -73.925007)
+    //   ],
+    // })
+    //
+    // // add listener and grab route
+    // .on('routeselected', function(e) {
+    //     var route = e.route;
+    //     var routeArray = new Array();
+    // // add all the intermediate lat lng points from the route to an array
+    //     for (var i = 0; i < route.coordinates.length; i++) {
+    //         routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
+    //     }
+    //     console.log(routeArray);
+    // }).addTo(map);
+
+    // hide directions div
+    // routeControl.hide();
+
     geoLayer.currentLayer = geoLayer.boroughLayer;
     geoLayer.currentLayer.addTo(map);
     geoLayer.currentName = 'borough';
