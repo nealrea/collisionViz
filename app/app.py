@@ -18,13 +18,19 @@ application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def index():
     return render_template('index.html')
 
-@application.route('/totals', methods=['GET'])
-def totals():
+@application.route('/borough_zip_totals', methods=['GET'])
+def borough_zip_totals():
     totals = {
         'borough': compute.borough_totals(),
         'zipCode': compute.zip_totals()
     }
     return jsonify(totals)
+
+@application.route('/bike_intersections', methods=['GET'])
+def bike_intersections():
+    intersections = compute.bike_intersections()
+
+    return jsonify(intersections)
 
 if __name__ == "__main__":
     application.run(host=host,port=port,debug=debug)

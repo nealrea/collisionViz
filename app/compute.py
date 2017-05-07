@@ -13,6 +13,15 @@ def borough_totals():
 def zip_totals():
     return collisions['ZIP CODE'].value_counts().to_dict()
 
+def bike_intersections():
+    intersections = collisions.groupby(['LATITUDE', 'LONGITUDE'])['NUMBER OF CYCLIST INJURED'].value_counts().to_dict()
+
+    data = []
+    for intersection in intersections:
+        data.append((intersection[0], intersection[1], intersections[intersection]))
+
+    return data
+
 #returns dict of total bike injuries/deaths filtered by collision rate
 def bike_totals(collRate):
 	df = collisions[collisions['Collision Rate'] == collRate]
