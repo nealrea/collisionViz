@@ -2,10 +2,12 @@
 var map = L.map('map').setView([40.7328, -73.9059], 10);
 
 // global, for storing geo JSON layers and current state
-var geoLayer = {};
+var geoLayer = {},
+    bikeLayer = {};
 
 // store data from the server here
-var globalData = {};
+var globalBorough = {},
+    globalBikes = {};
 
 // On first load, retrieve geoJSON file
 // Display map
@@ -32,10 +34,10 @@ $.getJSON('/static/geo_data/borough_zip_geo.json', function(data) {
 // retrieve borough totals
 $.ajax({
    'type': 'GET',
-   'url': '/totals'
+   'url': '/borough_zip_totals'
 }).done(function(data) {
     console.log(data);
-    globalData = data;
+    globalBorough = data;
     // add borough hover listeners
     addBoroughListeners();
 
@@ -43,10 +45,22 @@ $.ajax({
     console.log('nope');
 });
 
+// retrieve bike totals
+$.ajax({
+   'type': 'GET',
+   'url': '/bike_intersections'
+}).done(function(data) {
+    console.log(data);
+    globalBikes = data;
+}).fail(function() {
+    console.log('nope');
+});
+
 
 // When user zooms, update the geoJSON layer
 map.on('zoomend', function() {
-    var currentZoom = previousZoom = map.getZoom();
+    var currentZoom = previousZoom = map.getZoom(),
+        i;
     if (currentZoom <= 11 && geoLayer.currentName !== 'borough') {
         $('#data').hide();
         map.removeLayer(geoLayer.currentLayer);
@@ -81,6 +95,11 @@ map.on('zoomend', function() {
         geoLayer.currentName = 'None';
         removeBoroughListeners();
         removeZipListeners();
+
+        for (i = 0; i < globalBikes.length; i++) {
+            // L.circle([globalBikes[i][0], globalBikes[i][1]], {radius: 10}).addTo(map);
+        }
+
     }
 });
 
@@ -100,7 +119,7 @@ function showBoroughTotals(borough_name, borough_total) {
 function addBoroughListeners() {
     $('.borough').mouseenter(function() {
         var borough = $(this).attr('data-borough');
-        showBoroughTotals(borough, globalData.borough[borough].toString());
+        showBoroughTotals(borough, globalBorough.borough[borough].toString());
     });
 
     $('.borough').mouseleave(function() {
@@ -119,7 +138,7 @@ function addBoroughListeners() {
     //         'fill': 'red',
     //         'fill-opacity': 0.5
     //     })
-    //     showBoroughTotals(borough, globalData.borough[borough].toString());
+    //     showBoroughTotals(borough, globalBorough.borough[borough].toString());
     // });
 }
 
@@ -130,7 +149,7 @@ function removeBoroughListeners() {
 function addZipListeners() {
     $('.zipCode').mouseenter(function() {
         var zipCode = $(this).attr('data-zipCode');
-        showBoroughTotals(zipCode, globalData.zipCode[zipCode].toString());
+        showBoroughTotals(zipCode, globalBorough.zipCode[zipCode].toString());
     });
 
     $('.zipCode').mouseleave(function() {
@@ -148,7 +167,7 @@ function addZipListeners() {
     //         'fill': 'red',
     //         'fill-opacity': 0.5
     //     })
-    //     showBoroughTotals(zipCode, globalData.zipCode[zipCode].toString());
+    //     showBoroughTotals(zipCode, globalBorough.zipCode[zipCode].toString());
     // });
 }
 
