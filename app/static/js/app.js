@@ -20,7 +20,6 @@ $.getJSON('/static/geo_data/borough_zip_geo.json', function(data) {
         accessToken: 'pk.eyJ1Ijoiam9obnNwZW5jZXIxNSIsImEiOiJjajE2b2hhN2owMzl2MzRvNjhpdDM5bzk3In0.wr4EEzRfvpGTw6C9ltRZsw'
     }).addTo(map);
 
-
 function createButton(label, container) {
     var btn = L.DomUtil.create('button', '', container);
     btn.setAttribute('type', 'button');
@@ -29,7 +28,7 @@ function createButton(label, container) {
   }
 
 var control = L.Routing.control({
-      waypoints: []
+      waypoints: [],
     })
     .on('routeselected', function(e) {
         var route = e.route;
@@ -44,7 +43,8 @@ var control = L.Routing.control({
 map.on('click', function(e) {
   var container = L.DomUtil.create('div'),
       startBtn = createButton('Start', container),
-      destBtn = createButton('End', container);
+      destBtn = createButton('End', container),
+      removeBtn = createButton('Remove', container);
 
       L.popup()
       .setContent(container)
@@ -60,9 +60,32 @@ map.on('click', function(e) {
           control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
           map.closePopup();
       });
+
+      L.DomEvent.on(removeBtn, 'click', function() {
+          routeArray = new Array();
+          control.setWaypoints(routeArray);
+          map.closePopup();
+      });
+
       control.addTo(map);
-      control.hide();
+      // control.hide();
     });
+
+// search route by address
+var control1 = L.Routing.control({
+        waypoints: [],
+        routeWhileDragging: true,
+        geocoder: L.Control.Geocoder.nominatim()
+    })
+    .on('routingerror', function(e) {
+        try {
+            map.getCenter();
+        } catch (e) {
+            map.fitBounds(L.latLngBounds(control1.getWaypoints().map(function(wp) { return wp.latLng; })));
+        }
+        handleError(e);
+    })
+    .addTo(map);
 
     // Static route implementation - Initiate route on map
     // var routeControl = L.Routing.control({
