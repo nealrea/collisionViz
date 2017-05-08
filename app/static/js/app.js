@@ -30,6 +30,7 @@ function createButton(label, container) {
 var control = L.Routing.control({
       waypoints: [],
     })
+
     .on('routeselected', function(e) {
         var route = e.route;
         var routeArray = new Array();
@@ -71,13 +72,15 @@ map.on('click', function(e) {
       // control.hide();
     });
 
-// search route by address
+// search route
 var control1 = L.Routing.control({
         waypoints: [],
         routeWhileDragging: true,
         geocoder: L.Control.Geocoder.nominatim()
     })
+
     .on('routingerror', function(e) {
+
         try {
             map.getCenter();
         } catch (e) {
@@ -85,6 +88,17 @@ var control1 = L.Routing.control({
         }
         handleError(e);
     })
+
+    .on('routeselected', function(e) {
+        var route = e.route;
+        var routeArray = new Array();
+        // add all the intermediate lat lng points from the route to an array
+        for (var i = 0; i < route.coordinates.length; i++) {
+            routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
+        }
+        console.log(routeArray);
+      })
+
     .addTo(map);
 
     // Static route implementation - Initiate route on map
