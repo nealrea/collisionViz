@@ -27,6 +27,7 @@ function createButton(label, container) {
     return btn;
   }
 
+// Begin: map and control for click to add waypoints
 var control = L.Routing.control({
       waypoints: [],
     })
@@ -69,10 +70,12 @@ map.on('click', function(e) {
       });
 
       control.addTo(map);
-      // control.hide();
+
     });
 
-// search route
+// End: Map and control for click to add waypoints
+
+// Begin: map and control for geocode route search control
 var control1 = L.Routing.control({
         waypoints: [],
         routeWhileDragging: true,
@@ -100,28 +103,7 @@ var control1 = L.Routing.control({
       })
 
     .addTo(map);
-
-    // Static route implementation - Initiate route on map
-    // var routeControl = L.Routing.control({
-    //   waypoints: [
-    //     L.latLng(40.744725, -73.956927),
-    //     L.latLng(40.765096, -73.925007)
-    //   ],
-    // })
-    //
-    // // add listener and grab route
-    // .on('routeselected', function(e) {
-    //     var route = e.route;
-    //     var routeArray = new Array();
-    // // add all the intermediate lat lng points from the route to an array
-    //     for (var i = 0; i < route.coordinates.length; i++) {
-    //         routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
-    //     }
-    //     console.log(routeArray);
-    // }).addTo(map);
-
-    // hide directions div
-    // routeControl.hide();
+  // End: map and control for geocode route search
 
     geoLayer.currentLayer = geoLayer.boroughLayer;
     geoLayer.currentLayer.addTo(map);
