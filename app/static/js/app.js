@@ -29,7 +29,7 @@ function createButton(label, container) {
 
 // Begin: map and control for click to add waypoints
 var control = L.Routing.control({
-      waypoints: [],
+      waypoints: []
     })
 
     .on('routeselected', function(e) {
