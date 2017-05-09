@@ -19,20 +19,27 @@ function createButton(label, container) {
     return btn;
 }
 
+accessToken= 'pk.eyJ1Ijoiam9obnNwZW5jZXIxNSIsImEiOiJjajE2b2hhN2owMzl2MzRvNjhpdDM5bzk3In0.wr4EEzRfvpGTw6C9ltRZsw'
+
 // Begin: map and control for click to add waypoints
 var control = L.Routing.control({
-      waypoints: []
-    })
+      waypoints: [],
+      router: L.Routing.mapbox(accessToken, {
+       urlParameters: {
+         profile: 'mapbox.cycling'
+       }
+     })
+  })
 
-    .on('routeselected', function(e) {
-        var route = e.route;
-        var routeArray = new Array();
-        // add all the intermediate lat lng points from the route to an array
-        for (var i = 0; i < route.coordinates.length; i++) {
-            routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
-        }
-        console.log(routeArray);
-      });
+control.on('routeselected', function(e) {
+    var route = e.route;
+    var routeArray = new Array();
+    // add all the intermediate lat lng points from the route to an array
+    for (var i = 0; i < route.coordinates.length; i++) {
+        routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
+    }
+    console.log(routeArray);
+  });
 
 map.on('click', function(e) {
   var container = L.DomUtil.create('div'),
