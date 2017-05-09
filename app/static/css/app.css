@@ -1,13 +1,14 @@
 #map {
   margin: auto;
   height: 700px;
-  width: 1400px;
+  width: 1200px;
 }
 
-path:hover {
+/* this all causes highlighting on the route between waypoints*/
+/*path:hover {
     fill: red;
     fill-opacity: 0.5;
-}
+}*/
 
 #data {
     border-radius: 10px;
@@ -15,9 +16,9 @@ path:hover {
     background: rgba(0,0,0,.4);
     color: white;
     position: absolute;
-    margin-right: 100px;
     right: 30px;
     top: 30px;
+    margin-top:100px;
     width: 300px;
     display: none;
     text-align: center;
