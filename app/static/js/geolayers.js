@@ -1,5 +1,5 @@
 // Creat map wrapper, we center point and zoom level
-var map = L.map('map').setView([40.7328, -73.9059], 11);
+var map = L.map('map').setView([40.7328, -73.9059], 10);
 
 // global, for storing geo JSON layers and current state
 var geoLayer = {},
@@ -12,8 +12,8 @@ var globalBorough = {},
 // On first load, retrieve geoJSON file
 // Display map
 $.getJSON('/static/geo_data/borough_zip_geo.json', function(data) {
-    // geoLayer.boroughLayer = L.geoJSON(data.borough);
-    // geoLayer.zipLayer = L.geoJSON(data.zip);
+    geoLayer.boroughLayer = L.geoJSON(data.borough);
+    geoLayer.zipLayer = L.geoJSON(data.zip);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         maxZoom: 18,
         id: 'mapbox.streets',
@@ -39,7 +39,6 @@ var control = L.Routing.control({
         for (var i = 0; i < route.coordinates.length; i++) {
             routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
         }
-        send_route(routeArray);
         console.log(routeArray);
       });
 
@@ -100,108 +99,95 @@ var control1 = L.Routing.control({
         for (var i = 0; i < route.coordinates.length; i++) {
             routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
         }
-        send_route(routeArray);
         console.log(routeArray);
       })
 
     .addTo(map);
   // End: map and control for geocode route search
 
-    // geoLayer.currentLayer = geoLayer.boroughLayer;
-    // geoLayer.currentLayer.addTo(map);
-    // geoLayer.currentName = 'borough';
-    //
-    // // add attribute to each boroughs html element
-    // geoLayer.boroughLayer.eachLayer(function(layer) {
-    //     $(layer._path).attr('data-borough', layer.feature.properties.borough)
-    //         .addClass('borough');
-    // });
+    geoLayer.currentLayer = geoLayer.boroughLayer;
+    geoLayer.currentLayer.addTo(map);
+    geoLayer.currentName = 'borough';
+
+    // add attribute to each boroughs html element
+    geoLayer.boroughLayer.eachLayer(function(layer) {
+        $(layer._path).attr('data-borough', layer.feature.properties.borough)
+            .addClass('borough');
+    });
 
 });
 
-function send_route(route) {
-    $.ajax({
-        'type': 'POST',
-        'url': '/route',
-        'contentType':'application/json',
-        'dataType':'json',
-        'data': JSON.stringify(route)
-    }).done(function(data) {
-        console.log(data);
-    });
-}
+// retrieve borough totals
+$.ajax({
+   'type': 'GET',
+   'url': '/borough_zip_totals'
+}).done(function(data) {
+    console.log(data);
+    globalBorough = data;
+    // add borough hover listeners
+    addBoroughListeners();
 
-// // retrieve borough totals
-// $.ajax({
-//    'type': 'GET',
-//    'url': '/borough_zip_totals'
-// }).done(function(data) {
-//     console.log(data);
-//     globalBorough = data;
-//     // add borough hover listeners
-//     addBoroughListeners();
-//
-// }).fail(function() {
-//     console.log('nope');
-// });
-//
-// // retrieve bike totals
-// $.ajax({
-//    'type': 'GET',
-//    'url': '/bike_intersections'
-// }).done(function(data) {
-//     console.log(data);
-//     globalBikes = data;
-// }).fail(function() {
-//     console.log('nope');
-// });
+}).fail(function() {
+    console.log('nope');
+});
+
+// retrieve bike totals
+$.ajax({
+   'type': 'GET',
+   'url': '/bike_intersections'
+}).done(function(data) {
+    console.log(data);
+    globalBikes = data;
+}).fail(function() {
+    console.log('nope');
+});
 
 
-// // When user zooms, update the geoJSON layer
-// map.on('zoomend', function() {
-//     var currentZoom = previousZoom = map.getZoom(),
-//         i;
-//     if (currentZoom <= 11 && geoLayer.currentName !== 'borough') {
-//         $('#data').hide();
-//         map.removeLayer(geoLayer.currentLayer);
-//         geoLayer.currentLayer = geoLayer.boroughLayer;
-//         geoLayer.currentLayer.addTo(map);
-//         geoLayer.currentName = 'borough';
-//         // add attribute to each boroughs html element
-//         geoLayer.boroughLayer.eachLayer(function(layer) {
-//             $(layer._path).attr('data-borough', layer.feature.properties.borough)
-//                 .addClass('borough');
-//         });
-//         removeZipListeners();
-//         removeBoroughListeners();
-//         addBoroughListeners();
-//     } else if (currentZoom >= 12 && currentZoom <= 13 && geoLayer.currentName !== 'zip') {
-//         $('#data').hide();
-//         map.removeLayer(geoLayer.currentLayer);
-//         geoLayer.currentLayer = geoLayer.zipLayer;
-//         geoLayer.currentLayer.addTo(map);
-//         geoLayer.currentName = 'zip';
-//         geoLayer.zipLayer.eachLayer(function(layer) {
-//             $(layer._path).attr('data-zipCode', layer.feature.properties.postalCode)
-//                 .addClass('zipCode');
-//         });
-//         removeBoroughListeners();
-//         removeZipListeners();
-//         addZipListeners();
-//     } else if (currentZoom >= 14) {
-//         $('#data').hide();
-//         map.removeLayer(geoLayer.currentLayer);
-//         geoLayer.currentLayer = geoLayer.zipLayer;
-//         geoLayer.currentName = 'None';
-//         removeBoroughListeners();
-//         removeZipListeners();
-//
-//         for (i = 0; i < globalBikes.length; i++) {
-//             // L.circle([globalBikes[i][0], globalBikes[i][1]], {radius: 10}).addTo(map);
-//         }
-//
-//     }
-// });
+// When user zooms, update the geoJSON layer
+map.on('zoomend', function() {
+    var currentZoom = previousZoom = map.getZoom(),
+        i;
+    if (currentZoom <= 11 && geoLayer.currentName !== 'borough') {
+        $('#data').hide();
+        map.removeLayer(geoLayer.currentLayer);
+        geoLayer.currentLayer = geoLayer.boroughLayer;
+        geoLayer.currentLayer.addTo(map);
+        geoLayer.currentName = 'borough';
+        // add attribute to each boroughs html element
+        geoLayer.boroughLayer.eachLayer(function(layer) {
+            $(layer._path).attr('data-borough', layer.feature.properties.borough)
+                .addClass('borough');
+        });
+        removeZipListeners();
+        removeBoroughListeners();
+        addBoroughListeners();
+    } else if (currentZoom >= 12 && currentZoom <= 13 && geoLayer.currentName !== 'zip') {
+        $('#data').hide();
+        map.removeLayer(geoLayer.currentLayer);
+        geoLayer.currentLayer = geoLayer.zipLayer;
+        geoLayer.currentLayer.addTo(map);
+        geoLayer.currentName = 'zip';
+        geoLayer.zipLayer.eachLayer(function(layer) {
+            $(layer._path).attr('data-zipCode', layer.feature.properties.postalCode)
+                .addClass('zipCode');
+        });
+        removeBoroughListeners();
+        removeZipListeners();
+        addZipListeners();
+    } else if (currentZoom >= 14) {
+        $('#data').hide();
+        map.removeLayer(geoLayer.currentLayer);
+        geoLayer.currentLayer = geoLayer.zipLayer;
+        geoLayer.currentName = 'None';
+        removeBoroughListeners();
+        removeZipListeners();
+
+        for (i = 0; i < globalBikes.length; i++) {
+            // L.circle([globalBikes[i][0], globalBikes[i][1]], {radius: 10}).addTo(map);
+        }
+
+    }
+});
 
 
 // utitility functions

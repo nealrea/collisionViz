@@ -18,6 +18,12 @@ application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def index():
     return render_template('index.html')
 
+@application.route('/route', methods=['POST'])
+def route():
+    data = request.get_json()
+    print(data)
+    return jsonify(data='data!')
+
 @application.route('/borough_zip_totals', methods=['GET'])
 def borough_zip_totals():
     totals = {
