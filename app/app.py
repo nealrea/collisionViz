@@ -18,6 +18,13 @@ application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def index():
     return render_template('index.html')
 
+@application.route('/worst_intersections', methods=['POST'])
+def worst_intersections():
+    data = request.get_json()
+    print(data)
+    worst = compute.worst_intersections(data)
+    return jsonify(worst)
+
 @application.route('/borough_zip_totals', methods=['GET'])
 def borough_zip_totals():
     totals = {

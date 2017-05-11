@@ -1,7 +1,7 @@
 #map {
-  margin: auto;
   height: 700px;
   width: 1200px;
+  /*display: inline-block;*/
 }
 
 /* this all causes highlighting on the route between waypoints*/
@@ -31,4 +31,14 @@
 .data-title {
     font-size: 22px;
     padding-left: 10px;
+}
+
+#loading {
+    width: 50px;
+}
+
+#loading-box {
+    display: none;
+    vertical-align: top;
+    text-align: center;
 }
