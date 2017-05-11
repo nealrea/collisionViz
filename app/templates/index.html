@@ -11,9 +11,11 @@
 </head>
 
 <body>
-
-  <div id='map'>    
+  <div id='map'>
       <div id="data"></div>
+  </div>
+  <div id="loading-box">
+    <img id="loading" src="{{ url_for('static', filename='loader.gif') }}">
   </div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
   <script src="{{ url_for('static', filename='js/leaflet.js') }}" ></script>

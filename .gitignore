@@ -1,10 +1,8 @@
 */.ipynb_checkpoints/
 data/
-collisions.csv
-collisions_cleaned.csv
+*.csv
 .DS_Store
 venv/
-AADT.csv
 __pycache__/
 borough_zip_geo_backup.json
 *.pyc
