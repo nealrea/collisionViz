@@ -1,6 +1,12 @@
 import pandas as pd
+from geopy.distance import great_circle
 
-collisions = pd.read_csv('collisions.csv')
+# collisions = pd.read_csv('collisions.csv')
+bikes = pd.read_csv('bike_coll_rate.csv')
+bike_array = []
+for index, row in bikes.iterrows():
+    bike_array.append((row['LOCATION'], row['Collision Rate']))
+bike_array
 boroughs = ['Bronx', 'Brooklyn', 'Queens', 'Manhattan', 'Staten Island']
 
 def borough_totals():
@@ -12,6 +18,33 @@ def borough_totals():
 
 def zip_totals():
     return collisions['ZIP CODE'].value_counts().to_dict()
+
+def worst_intersections(route_points):
+    points = []
+    coors = []
+    count = 0
+    for i in route_points[::2]:
+        danger = 0
+        closest = 1000000000
+        route_point = (i[0], i[1])
+        for point in bike_array:
+            data_point = point[0]
+            distance = great_circle(route_point, data_point).miles
+            new_danger = point[1]
+            if (distance < closest) and (new_danger >= danger):
+                closest = distance
+                danger = new_danger
+        if ((len(points) < 5) and (route_point not in coors)):
+            coors.append(route_point)
+            points.append((route_point, danger))
+        else:
+            for point in range(len(points)):
+                if danger > points[point][1]:
+                    coors.append(route_point)
+                    points[point] = (route_point, danger)
+        print(points)
+    points = sorted(points, key=lambda x: x[1])
+    return points
 
 def bike_intersections():
     intersections = collisions.groupby(['LATITUDE', 'LONGITUDE'])['NUMBER OF CYCLIST INJURED'].value_counts().to_dict()
