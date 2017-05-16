@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet-routing-machine.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Control.Geocoder.css') }}" />
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -17,7 +19,10 @@
   <div id="loading-box">
     <img id="loading" src="{{ url_for('static', filename='loader.gif') }}">
   </div>
+  <div class="radarChart"></div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="{{ url_for('static', filename='js/radarChart.js') }}"></script>
   <script src="{{ url_for('static', filename='js/leaflet.js') }}" ></script>
   <script src="{{ url_for('static', filename='js/jquery.js') }}" ></script>
   <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
