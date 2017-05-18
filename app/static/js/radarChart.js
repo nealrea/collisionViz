@@ -1,5 +1,7 @@
+var COLLISION_RATE = 0.42415,
+    HMM = 0.4241484102878279
 var margin = {top: 100, right: 100, bottom: 100, left: 100},
-    width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+    width = Math.min(600, window.innerWidth - 10) - margin.left - margin.right,
     height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
 var data = [
@@ -21,15 +23,6 @@ var data = [
             {axis:"Large Screen",value:0.13},
             {axis:"Price Of Device",value:0.35},
             {axis:"To Be A Smartphone",value:0.38}
-          ],[//Nokia Smartphone
-            {axis:"Battery Life",value:0.26},
-            {axis:"Brand",value:0.10},
-            {axis:"Contract Cost",value:0.30},
-            {axis:"Design And Quality",value:0.14},
-            {axis:"Have Internet Connectivity",value:0.22},
-            {axis:"Large Screen",value:0.04},
-            {axis:"Price Of Device",value:0.41},
-            {axis:"To Be A Smartphone",value:0.30}
           ]
         ];
 
@@ -46,13 +39,14 @@ var radarChartOptions = {
   color: color
 };
 
-// RadarChart(".radarChart", data, radarChartOptions);
+RadarChart(".intersections", data, radarChartOptions);
+RadarChart(".causes", data, radarChartOptions);
 
 function RadarChart(id, data, options) {
-    // inspired by http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
+    // Inspired by http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
 	var cfg = {
-	 w: 600,				//Width of the circle
-	 h: 600,				//Height of the circle
+	 w: 400,				//Width of the circle
+	 h: 400,				//Height of the circle
 	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent

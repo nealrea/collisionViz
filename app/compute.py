@@ -1,11 +1,17 @@
 import pandas as pd
 from geopy.distance import great_circle
+from collections import defaultdict
 
 # collisions = pd.read_csv('collisions.csv')
 bikes = pd.read_csv('bike_coll_rate.csv')
 bike_array = []
 for index, row in bikes.iterrows():
-    bike_array.append((row['LOCATION'], row['Collision Rate']))
+    bike_array.append((row['LOCATION'], row['Collision Rate'],
+        [row['CONTRIBUTING FACTOR VEHICLE 1'],
+        row['CONTRIBUTING FACTOR VEHICLE 2'],
+        row['CONTRIBUTING FACTOR VEHICLE 3'],
+        row['CONTRIBUTING FACTOR VEHICLE 4'],
+        row['CONTRIBUTING FACTOR VEHICLE 5']]))
 bike_array
 boroughs = ['Bronx', 'Brooklyn', 'Queens', 'Manhattan', 'Staten Island']
 
@@ -22,6 +28,7 @@ def zip_totals():
 def worst_intersections(route_points):
     points = []
     coors = []
+    causes = defaultdict(int)
     count = 0
     for i in route_points[::2]:
         danger = 0
@@ -29,10 +36,18 @@ def worst_intersections(route_points):
         route_point = (i[0], i[1])
         for point in bike_array:
             data_point = point[0]
-            distance = great_circle(route_point, data_point).miles
+            distance = great_circle(route_point, data_point)
+
+            if (distance.feet < 100):
+                for cause in point[2]:
+                    if (cause == 'Unspecified') or (type(cause) == float):
+                        pass
+                    else:
+                        causes[cause] += 1
+
             new_danger = point[1]
-            if (distance < closest) and (new_danger >= danger):
-                closest = distance
+            if (distance.miles < closest) and (new_danger >= danger):
+                closest = distance.miles
                 danger = new_danger
         if ((len(points) < 5) and (route_point not in coors)):
             coors.append(route_point)
@@ -43,6 +58,7 @@ def worst_intersections(route_points):
                     coors.append(route_point)
                     points[point] = (route_point, danger)
         print(points)
+    print(sorted(causes.iteritems(), key=lambda (k,v): v, reverse=True)[:6])
     points = sorted(points, key=lambda x: x[1])
     return points
 

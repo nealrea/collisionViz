@@ -17,10 +17,14 @@ body {
     fill: #333333;
 }
 
+.causes, .intersections {
+    display: inline-block;
+}
+
 #map {
   height: 700px;
   width: 1200px;
-  /*display: inline-block;*/
+  display: inline-block;
 }
 
 /* this all causes highlighting on the route between waypoints*/

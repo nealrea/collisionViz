@@ -19,7 +19,8 @@
   <div id="loading-box">
     <img id="loading" src="{{ url_for('static', filename='loader.gif') }}">
   </div>
-  <div class="radarChart"></div>
+    <div class="intersections"></div>
+    <div class="causes"></div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
   <script src="{{ url_for('static', filename='js/radarChart.js') }}"></script>

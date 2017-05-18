@@ -113,8 +113,7 @@ function send_data(data) {
     for (index in ROUTE_POINTS) {
         map.removeLayer(ROUTE_POINTS[index]);
     }
-    $('#map').css('display', 'inline-block');
-    $('#loading-box').show().css('display', 'inline-block');
+    // $('#loading-box').show().css('display', 'inline-block');
     $.ajax({
         'type': 'POST',
         'url': '/worst_intersections',
@@ -122,7 +121,6 @@ function send_data(data) {
         'dataType': 'json',
         'data': JSON.stringify(data)
    }).done(function(points) {
-       $('#map').css('display', 'block');
        $('#loading-box').hide()
         var index;
         console.log(points);
