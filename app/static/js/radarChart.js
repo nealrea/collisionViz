@@ -2,28 +2,6 @@ var margin = {top: 100, right: 100, bottom: 100, left: 100},
     width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
     height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
-var data = [
-          [//iPhone
-            {axis:"Battery Life",value:0.22},
-            {axis:"Brand",value:0.28},
-            {axis:"Contract Cost",value:0.29},
-            {axis:"Design And Quality",value:0.17},
-            {axis:"Have Internet Connectivity",value:0.22},
-            {axis:"Large Screen",value:0.02},
-            {axis:"Price Of Device",value:0.21},
-            {axis:"To Be A Smartphone",value:0.50}
-          ],[//Samsung
-            {axis:"Battery Life",value:0.27},
-            {axis:"Brand",value:0.16},
-            {axis:"Contract Cost",value:0.35},
-            {axis:"Design And Quality",value:0.13},
-            {axis:"Have Internet Connectivity",value:0.20},
-            {axis:"Large Screen",value:0.13},
-            {axis:"Price Of Device",value:0.35},
-            {axis:"To Be A Smartphone",value:0.38}
-          ]
-        ];
-
 var color = d3.scale.ordinal()
     .range(["#EDC951","#CC333F","#00A0B0"]);
 
@@ -44,9 +22,9 @@ function RadarChart(id, data, options) {
     console.log(data);
     // Inspired by http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
 	var cfg = {
-	 w: 400,				//Width of the circle
-	 h: 400,				//Height of the circle
-	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
+	 w: 500,				//Width of the circle
+	 h: 500,				//Height of the circle
+	 margin: {top: 0, right: 0, bottom: 0, left: 0}, //The margins of the SVG
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
 	 labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
