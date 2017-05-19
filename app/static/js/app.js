@@ -147,6 +147,7 @@ function send_data(data) {
         }
 
         $('.legend').show();
+        $('.plot-title').show();
 
         $('.circle').mouseenter(function(e) {
             $('#num').text(($(e.target).attr('data-num')));
@@ -187,7 +188,7 @@ function send_data(data) {
        };
 
        RadarChart(".intersections", INTERSECTIONS, radarChartOptions);
-       radarChartOptions.format = ''
+       radarChartOptions.format = '.2f'
        RadarChart(".causes", CAUSES, radarChartOptions);
    }
 }
