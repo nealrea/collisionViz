@@ -188,7 +188,7 @@ function send_data(data) {
        };
 
        RadarChart(".intersections", INTERSECTIONS, radarChartOptions);
-       radarChartOptions.format = '.2f'
+       radarChartOptions.format = '%.2f'
        RadarChart(".causes", CAUSES, radarChartOptions);
    }
 }

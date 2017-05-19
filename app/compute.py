@@ -61,7 +61,7 @@ def worst_intersections(route_points):
                     points[point] = (route_point, danger)
     causes = sorted(causes.iteritems(), key=lambda (k,v): v, reverse=True)[:6]
     points = sorted(points, key=lambda x: x[1])
-    causes = [(cause[0], (float(cause[1]) / count) * 100) for cause in causes]
+    causes = [(cause[0], (float(cause[1]) / count)) for cause in causes]
     print(causes)
     print(count)
     return points, causes
