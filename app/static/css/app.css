@@ -8,13 +8,18 @@ body {
     cursor: default;
 }
 
+.credit, .credit a {
+    font-size: 16px;
+    text-decoration: none;
+}
+
 .title {
     margin: 0px 0 15px;
 }
 
 .plot-title {
     display: none;
-    margin-bottom: 0;   
+    margin-bottom: 0;
 }
 
 #num {
