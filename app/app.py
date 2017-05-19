@@ -21,7 +21,6 @@ def index():
 @application.route('/worst_intersections', methods=['POST'])
 def worst_intersections():
     data = request.get_json()
-    print(data)
     worst, causes = compute.worst_intersections(data)
     return jsonify(worst, causes)
 
