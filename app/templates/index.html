@@ -14,8 +14,11 @@
 </head>
 
 <body>
-  <img src="{{ url_for('static', filename='css/images/logo.png') }}">
-  <h1 class="title">Find safe biking routes in NYC</h1>
+  <div class="header">
+      <img src="{{ url_for('static', filename='css/images/logo.png') }}">
+      <br>
+      <h1 class="title">Find safe biking routes in NYC</h1>
+  </div>
   <div id='map'>
       <div id="data"></div>
   </div>
@@ -51,7 +54,7 @@
   </div>
   <div class="credit">
       Brought to you by the <a href="https://cyqlo.bike" target="_blank">Cyqlo</a> Data Team.
-      <a href="https://github.com/nealrea/collisionViz" target="_blank">Contributions</a> welcome.
+      <a href="https://github.com/nealrea/collisionViz" target="_blank">Contributions</a> are welcome.
   </div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>

@@ -121,7 +121,7 @@ function send_data(data) {
     for (index in ROUTE_POINTS) {
         map.removeLayer(ROUTE_POINTS[index]);
     }
-    // $('#loading-box').show().css('display', 'inline-block');
+    $('#loading-box').show().css('display', 'inline-block');
     $.ajax({
         'type': 'POST',
         'url': '/worst_intersections',
@@ -157,6 +157,9 @@ function send_data(data) {
         $('.circle').mouseleave(function(e) {
             $('#num').css('color', 'white')
         });
+   }).fail(function() {
+       $('#loading-box').hide();
+       alert('Shoot, we messed up. Reload and try again.')
    });
 
    function radar(points, causes) {
