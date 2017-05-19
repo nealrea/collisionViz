@@ -13,7 +13,8 @@
 </head>
 
 <body>
-  <h1>Find safe biking routes in NYC</h1>
+  <img src="{{ url_for('static', filename='css/images/logo.png') }}">
+  <h1 class="title">Find safe biking routes in NYC</h1>
   <div id='map'>
       <div id="data"></div>
   </div>
@@ -21,15 +22,16 @@
   <div id="loading-box">
     <img id="loading" src="{{ url_for('static', filename='loader.gif') }}">
   </div>
-  <h1 id="instr">Select your route to find ways to optimize it for safety. Intersections are highlighted based on danger.</h1>
   <div class="legend">
-      <h2>Drag path to explore a safer route</h2>
+      <h2>Intersections are highlighted based on danger. Drag path to explore a safer route.</h2>
       <h2>Route Statistics</h2>
   </div>
+  </br>
   <div class="left">
+      <h1 class="plot-title">Bicyle Accident Rate</h1>
       <div class="intersections"></div>
       <div class="legend">
-      <h4><strong>Avg: 0.42415</strong></h4>
+      <h4><strong>Avg: 0.42415 / million vehicles</strong></h4>
       <p>This radar plot shows the bicycle accident rate at the 5 most dangerous accidents along your route.
           If you hover over a highlighted intersection a number will appear in the top right corner of the map,
           cooresponding to the number on this rader plot. The axis is the collision rate (num. of collisions per million vehicles),
@@ -38,10 +40,11 @@
       </div>
   </div>
   <div class="right">
+      <h1 class="plot-title">Causes of Collisions</h1>
       <div class="causes"></div>
       <div class="legend">
-            <p>This radar plot shows the top causes of accidents along your route. The axis scale is the number of collisions in our data set
-                that match the cause of incident
+            <p>This radar plot shows the top causes of accidents along your route.
+               The axis is a percentage.
             </p>
       </div>
   </div>
