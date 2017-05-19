@@ -13,7 +13,7 @@ $ virtualenv venv
 ```
 3. Activate virtual environment (optional)
 ```
-$ source activate venv
+$ source venv/bin/activate
 ```
 4. Install python modules
 ```
