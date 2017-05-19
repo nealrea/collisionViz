@@ -29,7 +29,7 @@ def worst_intersections(route_points):
     points = []
     coors = []
     causes = defaultdict(int)
-    count = 0
+    count = 0.0
     for i in route_points[::2]:
         danger = 0
         closest = 1000000000
@@ -41,8 +41,10 @@ def worst_intersections(route_points):
             if (distance.feet < 100):
                 for cause in point[2]:
                     if (cause == 'Unspecified') or (type(cause) == float):
+                        # count += 1
                         pass
                     else:
+                        count += 1
                         causes[cause] += 1
 
             new_danger = point[1]
@@ -59,7 +61,9 @@ def worst_intersections(route_points):
                     points[point] = (route_point, danger)
     causes = sorted(causes.iteritems(), key=lambda (k,v): v, reverse=True)[:6]
     points = sorted(points, key=lambda x: x[1])
+    causes = [(cause[0], (float(cause[1]) / count) * 100) for cause in causes]
     print(causes)
+    print(count)
     return points, causes
 
 def bike_intersections():
