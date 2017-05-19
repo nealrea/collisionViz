@@ -8,6 +8,15 @@ body {
     cursor: default;
 }
 
+.title {
+    margin: 0px 0 15px;
+}
+
+.plot-title {
+    display: none;
+    margin-bottom: 0;   
+}
+
 #num {
     width: 20px;
     font-size: 20px;
