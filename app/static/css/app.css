@@ -8,6 +8,28 @@ body {
     cursor: default;
 }
 
+#num {
+    width: 20px;
+    font-size: 20px;
+    vertical-align: top;
+    color: white;
+}
+
+.right, .left {
+    width: 48%;
+    display: inline-block;
+}
+
+.right {
+    vertical-align: top;
+}
+
+.legend {
+    font-size: 18px;
+    padding: 0 80px;
+    display: none;
+}
+
 .legend {
     font-family: 'Raleway', sans-serif;
     fill: #333333;
