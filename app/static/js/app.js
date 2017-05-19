@@ -1,8 +1,17 @@
 // Creat map wrapper, we center point and zoom level
 var map = L.map('map').setView([40.7328, -73.9259], 11);
 
+var COLLISION_RATE = 0.42415,
+    HMM = 0.4241484102878279;
+
 // route points
-ROUTE_POINTS = []
+var ROUTE_POINTS = [],
+    COLORS = ['rgb(255, 247, 0)', 'rgb(255, 211, 0)', 'rgb(255, 186, 0)', 'rgb(255, 125, 0)', 'rgb(255, 0, 0)'],
+    NAMES = ['Yellow', 'YellowOrange', 'Orange', 'RedOrange', 'Red'];
+
+// causes
+var CAUSES = [],
+    INTERSECTIONS = [];
 
 // On first load, retrieve geoJSON file
 // Display map
@@ -42,7 +51,6 @@ control.on('routeselected', function(e) {
         routeArray.push([route.coordinates[i].lat,route.coordinates[i].lng]);
     }
     send_data(routeArray);
-    console.log(routeArray);
   });
 
 map.on('click', function(e) {
@@ -120,19 +128,66 @@ function send_data(data) {
         'contentType': 'application/json',
         'dataType': 'json',
         'data': JSON.stringify(data)
-   }).done(function(points) {
-       $('#loading-box').hide()
-        var index;
-        console.log(points);
-        colors = ['rgb(255, 247, 0)', 'rgb(255, 211, 0)', 'rgb(255, 186, 0)', 'rgb(255, 125, 0)', 'rgb(255, 0, 0)']
+   }).done(function(response) {
+       $('.circle').off();
+       $('#loading-box').hide();
+        var index,
+            points = response[0];
+
+        radar(points, response[1])
         ROUTE_POINTS = []
         for (index in points) {
-            point = L.circle(points[index][0], {radius: 30}).addTo(map);
+            point = L.circle(points[index][0], {radius: 30, className: 'circle'}).addTo(map);
             ROUTE_POINTS.push(point)
+
             point._path.setAttribute('data-rate', points[index][1])
-            point._path.style.fill = colors[index]
-            point._path.style.stroke = colors[index]
-            console.log(point);
+            point._path.setAttribute('data-num', index)
+            point._path.style.fill = COLORS[index]
+            point._path.style.stroke = COLORS[index]
         }
+
+        $('.legend').show();
+
+        $('.circle').mouseenter(function(e) {
+            $('#num').text(($(e.target).attr('data-num')));
+            $('#num').css('color', 'black')
+        });
+
+        $('.circle').mouseleave(function(e) {
+            $('#num').css('color', 'white')
+        });
    });
+
+   function radar(points, causes) {
+       CAUSES.push([])
+       for (var item in causes) {
+           var cause = {};
+           cause['axis'] = causes[item][0];
+           cause['value'] = causes[item][1];
+           CAUSES[CAUSES.length - 1].push(cause)
+       }
+       INTERSECTIONS.push([])
+       for (var item in points) {
+        //    INTERSECTIONS[0].push({'axis': item, 'value': COLLISION_RATE})
+           var cause = {};
+           cause['axis'] = item;
+           cause['value'] = points[item][1];
+           INTERSECTIONS[INTERSECTIONS.length - 1].push(cause)
+       }
+
+       var radarChartOptions = {
+         w: width,
+         h: height,
+         margin: margin,
+         maxValue: 0.5,
+         levels: 5,
+         roundStrokes: true,
+         color: color,
+         format: '.4f'
+       };
+
+       RadarChart(".intersections", INTERSECTIONS, radarChartOptions);
+       radarChartOptions.format = ''
+       RadarChart(".causes", CAUSES, radarChartOptions);
+   }
 }

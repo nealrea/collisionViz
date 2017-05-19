@@ -1,7 +1,5 @@
-var COLLISION_RATE = 0.42415,
-    HMM = 0.4241484102878279
 var margin = {top: 100, right: 100, bottom: 100, left: 100},
-    width = Math.min(600, window.innerWidth - 10) - margin.left - margin.right,
+    width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
     height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
 var data = [
@@ -39,10 +37,11 @@ var radarChartOptions = {
   color: color
 };
 
-RadarChart(".intersections", data, radarChartOptions);
-RadarChart(".causes", data, radarChartOptions);
+// RadarChart(".intersections", data, radarChartOptions);
+// RadarChart(".causes", data, radarChartOptions);
 
 function RadarChart(id, data, options) {
+    console.log(data);
     // Inspired by http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
 	var cfg = {
 	 w: 400,				//Width of the circle
@@ -57,7 +56,8 @@ function RadarChart(id, data, options) {
 	 opacityCircles: 0.1, 	//The opacity of the circles of each blob
 	 strokeWidth: 2, 		//The width of the stroke around each blob
 	 roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
-	 color: d3.scale.category10()	//Color function
+	 color: d3.scale.category10(),	//Color function
+     format: ''
 	};
 
 	if('undefined' !== typeof options){
@@ -72,7 +72,7 @@ function RadarChart(id, data, options) {
 	var allAxis = (data[0].map(function(i, j){return i.axis})),
 		total = allAxis.length,
 		radius = Math.min(cfg.w/2, cfg.h/2),
-		Format = d3.format('%'),
+		Format = d3.format(options.format),
 		angleSlice = Math.PI * 2 / total;
 
 	var rScale = d3.scale.linear()
