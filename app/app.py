@@ -22,8 +22,8 @@ def index():
 def worst_intersections():
     data = request.get_json()
     print(data)
-    worst = compute.worst_intersections(data)
-    return jsonify(worst)
+    worst, causes = compute.worst_intersections(data)
+    return jsonify(worst, causes)
 
 @application.route('/borough_zip_totals', methods=['GET'])
 def borough_zip_totals():

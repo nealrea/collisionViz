@@ -3,7 +3,7 @@ from geopy.distance import great_circle
 from collections import defaultdict
 
 # collisions = pd.read_csv('collisions.csv')
-bikes = pd.read_csv('bike_coll_rate.csv')
+bikes = pd.read_csv('bike_coll_rate.csv', low_memory=False)
 bike_array = []
 for index, row in bikes.iterrows():
     bike_array.append((row['LOCATION'], row['Collision Rate'],
@@ -46,7 +46,7 @@ def worst_intersections(route_points):
                         causes[cause] += 1
 
             new_danger = point[1]
-            if (distance.miles < closest) and (new_danger >= danger):
+            if (distance.miles <= closest) and (new_danger >= danger):
                 closest = distance.miles
                 danger = new_danger
         if ((len(points) < 5) and (route_point not in coors)):
@@ -57,10 +57,10 @@ def worst_intersections(route_points):
                 if danger > points[point][1]:
                     coors.append(route_point)
                     points[point] = (route_point, danger)
-        print(points)
-    print(sorted(causes.iteritems(), key=lambda (k,v): v, reverse=True)[:6])
+    causes = sorted(causes.iteritems(), key=lambda (k,v): v, reverse=True)[:6]
     points = sorted(points, key=lambda x: x[1])
-    return points
+    print(causes)
+    return points, causes
 
 def bike_intersections():
     intersections = collisions.groupby(['LATITUDE', 'LONGITUDE'])['NUMBER OF CYCLIST INJURED'].value_counts().to_dict()
