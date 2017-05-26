@@ -24,6 +24,13 @@ $ pip install -r requirements.txt
 $ python app.py
 ```
 
+## Usage
+1. Zoom in to desired location
+2. Click to select start/end points of desired cycling route
+3. See route statistics displayed below map
+4. Click and drag route or select new start/end points for alternate route
+5. See new route statistics overlaying previous route statistics for safety comparison
+
 ## Project Overview
 
 ### Background and Motivation
