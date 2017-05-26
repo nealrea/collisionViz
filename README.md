@@ -2,6 +2,14 @@
 
 ### John Spencer, Michael Hendrickson, Neal "The Real Neal" Rea
 
+## Usage
+1. Zoom in to desired location
+2. Click to select start/end points of desired cycling route
+3. See route statistics displayed below map
+4. Click and drag route or select new start/end points for alternate route
+5. See new route statistics overlaying previous route statistics for safety comparison
+
+
 ## Dev Setup
 1. Move to app directory
 ```
@@ -23,13 +31,6 @@ $ pip install -r requirements.txt
 ```
 $ python app.py
 ```
-
-## Usage
-1. Zoom in to desired location
-2. Click to select start/end points of desired cycling route
-3. See route statistics displayed below map
-4. Click and drag route or select new start/end points for alternate route
-5. See new route statistics overlaying previous route statistics for safety comparison
 
 ## Project Overview
 
@@ -53,7 +54,7 @@ First of all, we cleaned the collision data of any rows containing incomplete or
 If at some point our stretch goal of integrating weather data is met, we will need to represent the weather data as average daily values across three weather stations (Central Park, JFK, Laguardia Airport) in order to optimize readability and gain a more representative sample for the day's rainfall across the city.
 
 ### Visualization
-The foundation of our visualization is a map of New York City. The user is then able to zoom to a desired area and select a biking route based on start and end points. Upon selection of start and end points, a default route is instantly generated and various statistics along that route are calculated, including the five most dangerous intersections and their collision rates and the top six causes of collisions along the route. This information is generated on two separate radar plots below the map while the five most dangerous intersections are highlighted on the map. The user then has the option to select a new route, either by selecting new start and end points or clicking the route and dragging/dropping to a new location. The new statistical information is displayed on the radar plots, overlaying the previous route's information for effortless safety comparisons. 
+The foundation of our visualization is a map of New York City. The user is then able to zoom to a desired area and select a biking route based on start and end points. Upon selection of start and end points, a default route is instantly generated and various statistics along that route are calculated, including the five most dangerous intersections and their collision rates and the top six causes of collisions along the route. This information is generated on two separate radar plots below the map while the five most dangerous intersections are highlighted on the map. The user then has the option to select a new route, either by selecting new start and end points or clicking the route and dragging/dropping to a new location. The new statistical information is displayed on the radar plots, overlaying the previous route's information for effortless safety comparisons.
 
 ### Project Schedule
 3/27/17: Set up project repository.
