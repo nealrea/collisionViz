@@ -1,6 +1,6 @@
 # Data Viz Project Proposal
 
-### John Spencer, Michael Hendrickson, Neal "The Real Neal" Rea
+### John Spencer, Michael Hendrickson, Neal Rea
 
 ## Usage
 1. Zoom in to desired location
